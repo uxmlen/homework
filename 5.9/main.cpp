@@ -34,9 +34,9 @@ int main(void)
     cout << "если элемента не существует то: " << slot->getElement(100) << endl;
     machine->addSlot(slot);
     machine->addSlot(slot2);
-    std::cout << "5 элемент из первого слота: "  << machine->getSlot(1)->getElement(5) << endl;
-    std::cout << "2 элемент из второго слота: "  << machine->getSlot(2)->getElement(2) << endl;
-    std::cout << machine->getEmptySlotsCount();
+    cout << "5 элемент из первого слота: "  << machine->getSlot(1)->getElement(5) << endl;
+    cout << "2 элемент из второго слота: "  << machine->getSlot(2)->getElement(2) << endl;
+    cout << machine->getEmptySlotsCount();
 
     delete machine;
     delete slot;
