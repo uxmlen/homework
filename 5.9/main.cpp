@@ -36,6 +36,7 @@ int main(void)
     machine->addSlot(slot2);
     cout << "5 элемент из первого слота: "  << machine->getSlot(1)->getElement(5) << endl;
     cout << "2 элемент из второго слота: "  << machine->getSlot(2)->getElement(2) << endl;
+    // общее количество элементов
     cout << machine->getEmptySlotsCount();
 
     delete machine;

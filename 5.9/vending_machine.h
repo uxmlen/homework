@@ -2,7 +2,7 @@
 
 class VendingMachine
 {
-    unsigned int free_slots; 
+    unsigned int total_slots; 
     unsigned int full_slots;
     std::vector<SnackSlot*> slots;
 public:

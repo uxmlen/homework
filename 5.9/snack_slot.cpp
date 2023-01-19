@@ -5,19 +5,19 @@
 SnackSlot::SnackSlot(unsigned int cells_number)
 {
     if (cells_number < 0) {
-        std::cerr << "error: количество snack не может быть меньше нуля"; 
+        std::cerr << "error: количество snack'ов не может быть меньше нуля"; 
         exit(1);
     }
-    free_cells = cells_number;
+    total_cells = cells_number;
 }
 
 void SnackSlot::addSnack(Snack *new_snack)
 {
-    if (full_cells > free_cells) {
+    if (full_cells > total_cells) {
         std::cerr << "error; в этом слоте закончилось место ";
         exit(1);
     }
-    // повышаем счётчик заполненных ячейки
+    // повышаем счётчик заполненных ячеек
     full_cells++;
     one_slot.push_back(new_snack);
 

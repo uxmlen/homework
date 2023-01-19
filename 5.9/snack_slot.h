@@ -6,9 +6,9 @@
 
 class SnackSlot
 {
-    // сколько может поместиться 
-    unsigned int free_cells;
-    // заполненные ячейки
+    // общее количество ячеек
+    unsigned int total_cells;
+    // количество заполненных ячеек
     unsigned int full_cells = 0;
     std::vector<Snack*> one_slot; 
 public:
