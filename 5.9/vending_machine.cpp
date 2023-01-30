@@ -3,12 +3,12 @@
 #include "vending_machine.h"
 
 VendingMachine::VendingMachine(unsigned int slots_number)
+    : total_slots(slots_number)
 {
     if (slots_number < 0) {
         std::cerr << "error: количество слотов не может быть меньше нуля";
         exit(1);
     }
-    total_slots = slots_number;
 }
 
 void VendingMachine::addSlot(SnackSlot *slot)
@@ -20,7 +20,6 @@ void VendingMachine::addSlot(SnackSlot *slot)
     }
     full_slots++;
     slots.push_back(slot);
-
 }
 
 SnackSlot *VendingMachine::getSlot(unsigned int number_slot) const

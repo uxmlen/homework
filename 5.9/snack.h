@@ -4,8 +4,9 @@
 
 class Snack
 {
-    std::string product_name;
+    std::string name;
 public:
-    Snack(std::string product_name);
+    Snack(const std::string& product_name)
+        : name(product_name) {}
     std::string getNameProduct() const;
 };

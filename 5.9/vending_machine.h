@@ -4,7 +4,7 @@ class VendingMachine
 {
     unsigned int total_slots; 
     unsigned int full_slots;
-    std::vector<SnackSlot*> slots;
+    std::vector<SnackSlot *> slots;
 public:
     VendingMachine(unsigned int slot_count);
     // сеттеры

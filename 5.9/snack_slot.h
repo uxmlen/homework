@@ -10,7 +10,7 @@ class SnackSlot
     unsigned int total_cells;
     // количество заполненных ячеек
     unsigned int full_cells = 0;
-    std::vector<Snack*> one_slot; 
+    std::vector<Snack *> one_slot; 
 public:
     SnackSlot(unsigned int slot_number);
     void addSnack(Snack *new_snack);
