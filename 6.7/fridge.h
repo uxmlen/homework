@@ -11,5 +11,5 @@ public:
             unsigned int height, unsigned int width, 
             unsigned short number_chambers)
         : Electronic(product_name, price), Appliance(height, width), number_chambers_(number_chambers) {}
-    void showInfo() const;
+    void showInfo() const override;
 };
