@@ -23,7 +23,7 @@ int main(void)
     array.resize(15);
 
     std::cout << "изменяем размер контейнера " << array.length() << std::endl;
-    array.insert(13, 251); // добавляем в производную позицию элемент
+    array.insert(13, 251); // добавляем в произвольную позицию элемент
 
     std::cout << "число 4 под индексам " << array.find(4) << std::endl;
     for (size_t i = 0; i < array.length(); ++i)
@@ -35,7 +35,7 @@ int main(void)
     }
     
     IntArray b = array;
-    std::cout << "копируем массив array в массив b" << std::endl;
+    std::cout << "создаём новый контейнер b на основе array" << std::endl;
     b.resize(5);
     b.push_front(299);
     for (size_t i = 0; i < b.length(); ++i)
