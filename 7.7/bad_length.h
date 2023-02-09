@@ -1,6 +1,6 @@
-#include <exception>
+#include <stdexcept>
 
-struct bad_length : public std::exception
+struct bad_length : public std::logic_error
 {
-    const char *what() const noexcept override;
+    bad_length() : std::logic_error("Error: wrong length of the container") {}
 };

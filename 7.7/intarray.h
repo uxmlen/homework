@@ -8,7 +8,7 @@ class IntArray final
     int* data_ = nullptr;
 public:
     IntArray() = default;
-    IntArray(int length);
+    explicit IntArray(int length);
     // deep copy
     IntArray(const IntArray& obj);
 

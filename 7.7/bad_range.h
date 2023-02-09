@@ -1,6 +1,6 @@
-#include <exception>
+#include <stdexcept>
 
-struct bad_range : public std::exception
+struct bad_range : public std::logic_error
 {
-    const char *what() const noexcept override;
+    bad_range() : std::logic_error("error: out of range") {}
 };
