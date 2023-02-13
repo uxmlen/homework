@@ -16,7 +16,7 @@ int main(void)
     Snack *snickers = new Snack("Snickers");
     Snack *milkway = new Snack("MilkWay");
     Snack *twix = new Snack("twix");
-    // создаем слот для Snack'ов 
+    // создаём слот для Snack'ов 
     SnackSlot *slot = new SnackSlot(10);
     SnackSlot *slot2 = new SnackSlot(10);
     // добавляем в ячейки закуски

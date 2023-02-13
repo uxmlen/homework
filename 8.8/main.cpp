@@ -1,11 +1,10 @@
 #include <iostream>
 
-#include "intarray.h"
-#include "bad_range.h"
+#include "array.h"
 
 int main(void)
 {
-    IntArray array(10);
+    Array<int> array(10);
 
     for(size_t i = 0; i < array.length(); ++i) 
         array[i] = i+1;
@@ -34,7 +33,7 @@ int main(void)
         std::cout << err.what() << std::endl;
     }
     
-    IntArray b = array;
+    Array<int> b = array;
     std::cout << "создаём новый контейнер b на основе array" << std::endl;
     b.resize(5);
     b.push_front(299);

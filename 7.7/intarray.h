@@ -8,7 +8,12 @@ class IntArray final
     int* data_ = nullptr;
 public:
     IntArray() = default;
-    explicit IntArray(int length);
+
+    // если new не сможет выделить память, то все равно будет 
+    // std::bad_alloc и объект не будет создан
+    // так же блокируем неявные преобразование
+    explicit IntArray(std::size_t length) 
+        : data_(new int[length]), length_(length) {}
     // deep copy
     IntArray(const IntArray& obj);
 

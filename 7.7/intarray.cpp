@@ -2,16 +2,6 @@
 #include "bad_range.h"
 #include "bad_length.h"
 
-// если new не сможет выделить память, то все равно будет 
-// std::bad_alloc и объект не будет создан
-// так же блокируем неявные преобразование
-IntArray::IntArray(int length) 
-    : data_(new int[length]), length_(length)
-{
-    if (length <= 0)
-        throw bad_length();
-}
-
 IntArray& IntArray::operator=(const IntArray& obj)
 {
     if (&obj == this)
@@ -19,7 +9,7 @@ IntArray& IntArray::operator=(const IntArray& obj)
 
     reallocate(obj.length());
 
-    for (int index = 0; index < length_; ++index)
+    for (std::size_t index = 0; index < length_; ++index)
         data_[index] = obj.data_[index];
 
     return *this;
@@ -42,7 +32,7 @@ void IntArray::reallocate(int new_length)
     erase();
 
     if (new_length <= 0)
-        return;
+        throw bad_length();
 
     data_ = new int[new_length];
     length_ = new_length;
