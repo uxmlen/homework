@@ -1,6 +1,3 @@
 #include "electronic.h"
 
-const std::string Electronic::getProductName() const
-{
-    return name_;
-}
+const std::string Electronic::getProductName() const { return name_; }

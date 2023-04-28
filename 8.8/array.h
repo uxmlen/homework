@@ -2,28 +2,30 @@
 
 #include <cstdint>
 
-#include "bad_range.h"
 #include "bad_length.h"
+#include "bad_range.h"
 
-template <typename T = int>
-class Array final
-{
-    std::size_t length_{}; // value-init
+template <typename T = int> class Array final {
+    std::size_t length_ {}; // value-init
     T* data_ = nullptr;
+
 public:
     Array() = default;
 
-    // если new не сможет выделить память, то все равно будет 
+    // если new не сможет выделить память, то все равно будет
     // std::bad_alloc и объект не будет создан
     // так же блокируем неявные преобразование
-    explicit Array(std::size_t length) 
-        : data_(new T[length]), length_(length) {}
+    explicit Array(std::size_t length)
+        : data_(new T[length])
+        , length_(length)
+    {
+    }
     // deep copy
     Array(const Array& obj)
     {
         reallocate(obj.length());
         try {
-            for (std::size_t index = 0 ; index < length_; ++index)
+            for (std::size_t index = 0; index < length_; ++index)
                 data_[index] = obj.data_[index];
         } catch (...) {
             delete[] data_;
@@ -59,7 +61,7 @@ public:
             erase();
             return;
         }
-        int *new_data = new int[length_ - 1];
+        int* new_data = new int[length_ - 1];
         // копируем все элементы до index
         for (std::size_t before = 0; before < index; ++before)
             new_data[before] = data_[before];
@@ -72,22 +74,16 @@ public:
         --length_;
     }
 
-    void push_back(int value)
-    {
-        insert(length_, value);
-    }
+    void push_back(int value) { insert(length_, value); }
 
-    void push_front(int value)
-    {
-        insert(0, value);
-    }
+    void push_front(int value) { insert(0, value); }
 
     void insert(std::size_t index, T value)
     {
         if (index > length_)
             throw bad_range();
 
-        int *new_data = new int[length_ + 1];
+        int* new_data = new int[length_ + 1];
 
         for (std::size_t before = 0; before < index; ++before)
             new_data[before] = data_[before];
@@ -111,7 +107,7 @@ public:
         }
 
         int elements_to_copy = (new_length > length_) ? length_ : new_length;
-        int *new_data = new int[new_length];
+        int* new_data = new int[new_length];
 
         for (int index = 0; index < elements_to_copy; ++index)
             new_data[index] = data_[index];
@@ -121,10 +117,7 @@ public:
         length_ = new_length;
     }
 
-    std::size_t length() const noexcept
-    { 
-        return length_;
-    }
+    std::size_t length() const noexcept { return length_; }
 
     int& operator[](std::size_t index)
     {
@@ -145,11 +138,9 @@ public:
 
         return *this;
     }
-    
-    ~Array()
-    {
-        delete[] data_;
-    }
+
+    ~Array() { delete[] data_; }
+
 private:
     void reallocate(int new_length)
     {

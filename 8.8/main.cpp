@@ -6,18 +6,19 @@ int main(void)
 {
     Array<int> array(10);
 
-    for(size_t i = 0; i < array.length(); ++i) 
-        array[i] = i+1;
+    for (size_t i = 0; i < array.length(); ++i)
+        array[i] = i + 1;
 
     std::cout << "количество элементов -  " << array.length() << std::endl;
     array.remove(4);
     array.remove(2);
 
-    std::cout << "удаляем два элемента - "<< array.length() << std::endl;
+    std::cout << "удаляем два элемента - " << array.length() << std::endl;
     array.push_back(450);
     array.push_front(350);
 
-    std::cout << "добавляем элемент в конец и в начало" << array.length() << std::endl;
+    std::cout << "добавляем элемент в конец и в начало" << array.length()
+              << std::endl;
 
     array.resize(15);
 
@@ -29,10 +30,10 @@ int main(void)
         std::cout << array[i] << std::endl;
     try {
         array[-21421421];
-    } catch (bad_range &err) {
+    } catch (bad_range& err) {
         std::cout << err.what() << std::endl;
     }
-    
+
     Array<int> b = array;
     std::cout << "создаём новый контейнер b на основе array" << std::endl;
     b.resize(5);

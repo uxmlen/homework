@@ -8,17 +8,17 @@ using namespace std;
 int main(void)
 {
     setlocale(LC_ALL, "");
-    
+
     // создаём торговый автомат с 10 слотами для Snack'ов
-    VendingMachine *machine = new VendingMachine(10);
-    // создаём 2x закуски 
-    Snack *bounty = new Snack("Bounty");
-    Snack *snickers = new Snack("Snickers");
-    Snack *milkway = new Snack("MilkWay");
-    Snack *twix = new Snack("twix");
-    // создаём слот для Snack'ов 
-    SnackSlot *slot = new SnackSlot(10);
-    SnackSlot *slot2 = new SnackSlot(10);
+    VendingMachine* machine = new VendingMachine(10);
+    // создаём 2x закуски
+    Snack* bounty = new Snack("Bounty");
+    Snack* snickers = new Snack("Snickers");
+    Snack* milkway = new Snack("MilkWay");
+    Snack* twix = new Snack("twix");
+    // создаём слот для Snack'ов
+    SnackSlot* slot = new SnackSlot(10);
+    SnackSlot* slot2 = new SnackSlot(10);
     // добавляем в ячейки закуски
     slot->addSnack(bounty);
     slot->addSnack(snickers);
@@ -34,8 +34,10 @@ int main(void)
     cout << "если элемента не существует то: " << slot->getElement(100) << endl;
     machine->addSlot(slot);
     machine->addSlot(slot2);
-    cout << "5 элемент из первого слота: "  << machine->getSlot(1)->getElement(5) << endl;
-    cout << "2 элемент из второго слота: "  << machine->getSlot(2)->getElement(2) << endl;
+    cout << "5 элемент из первого слота: " << machine->getSlot(1)->getElement(5)
+         << endl;
+    cout << "2 элемент из второго слота: " << machine->getSlot(2)->getElement(2)
+         << endl;
     // общее количество элементов
     cout << machine->getEmptySlotsCount();
 
@@ -43,6 +45,6 @@ int main(void)
     delete slot;
     delete snickers;
     delete bounty;
-    
+
     return 0;
 }

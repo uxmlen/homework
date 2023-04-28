@@ -1,6 +1,6 @@
 #include "intarray.h"
-#include "bad_range.h"
 #include "bad_length.h"
+#include "bad_range.h"
 
 IntArray& IntArray::operator=(const IntArray& obj)
 {
@@ -9,7 +9,7 @@ IntArray& IntArray::operator=(const IntArray& obj)
 
     reallocate(obj.length());
 
-    for (std::size_t index = 0; index < length_; ++index)
+    for (size_t index = 0; index < length_; ++index)
         data_[index] = obj.data_[index];
 
     return *this;
@@ -19,7 +19,7 @@ IntArray::IntArray(const IntArray& obj)
 {
     reallocate(obj.length());
     try {
-        for (std::size_t index = 0 ; index < length_; ++index)
+        for (size_t index = 0; index < length_; ++index)
             data_[index] = obj.data_[index];
     } catch (...) {
         delete[] data_;
@@ -38,7 +38,6 @@ void IntArray::reallocate(int new_length)
     length_ = new_length;
 }
 
-
 void IntArray::erase()
 {
     delete[] data_;
@@ -56,7 +55,7 @@ void IntArray::resize(std::size_t new_length)
     }
 
     int elements_to_copy = (new_length > length_) ? length_ : new_length;
-    int *new_data = new int[new_length];
+    int* new_data = new int[new_length];
 
     for (int index = 0; index < elements_to_copy; ++index)
         new_data[index] = data_[index];
@@ -66,9 +65,9 @@ void IntArray::resize(std::size_t new_length)
     length_ = new_length;
 }
 
-const int IntArray::find(int value)
+int IntArray::find(int value) const
 {
-    for (std::size_t index = 0; index < length_; ++index) {
+    for (size_t index = 0; index < length_; ++index) {
         if (data_[index] == value) {
             return index;
         }
@@ -86,7 +85,7 @@ void IntArray::remove(std::size_t index)
         erase();
         return;
     }
-    int *new_data = new int[length_ - 1];
+    int* new_data = new int[length_ - 1];
     // копируем все элементы до index
     for (size_t before = 0; before < index; ++before)
         new_data[before] = data_[before];
@@ -99,23 +98,20 @@ void IntArray::remove(std::size_t index)
     --length_;
 }
 
-std::size_t IntArray::length() const noexcept
-{
-    return length_;
-}
+size_t IntArray::length() const noexcept { return length_; }
 
-void IntArray::insert(std::size_t index, int value)
+void IntArray::insert(size_t index, int value)
 {
     if (index > length_)
         throw bad_range();
 
-    int *new_data = new int[length_ + 1];
+    int* new_data = new int[length_ + 1];
 
-    for (std::size_t before = 0; before < index; ++before)
+    for (size_t before = 0; before < index; ++before)
         new_data[before] = data_[before];
     // вставляем новый элемент
     new_data[index] = value;
-    for (std::size_t after = index; after < length_; ++after)
+    for (size_t after = index; after < length_; ++after)
         new_data[after + 1] = data_[after];
 
     delete[] data_;
@@ -123,17 +119,11 @@ void IntArray::insert(std::size_t index, int value)
     ++length_;
 }
 
-void IntArray::push_back(int value)
-{
-    insert(length_, value);
-}
+void IntArray::push_back(int value) { insert(length_, value); }
 
-void IntArray::push_front(int value)
-{
-    insert(0, value);
-}
+void IntArray::push_front(int value) { insert(0, value); }
 
-int& IntArray::operator[](std::size_t index)
+int& IntArray::operator[](size_t index)
 {
     if (index > length_)
         throw bad_range();
@@ -141,7 +131,12 @@ int& IntArray::operator[](std::size_t index)
     return data_[index];
 }
 
-IntArray::~IntArray()
+const int& IntArray::operator[](size_t index) const
 {
-    delete[] data_;
+    if (index > length_)
+        throw bad_range();
+
+    return data_[index];
 }
+
+IntArray::~IntArray() { delete[] data_; }

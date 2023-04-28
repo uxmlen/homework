@@ -10,5 +10,4 @@ void Phone::showInfo() const
               << "Потребление: " << consumation_ << std::endl
               << "OS: " << (OS_ == 'I' ? "Iphone" : "Android") << std::endl
               << "Цена: " << price_ << std::endl;
-
 };

@@ -11,10 +11,9 @@ VendingMachine::VendingMachine(unsigned int slots_number)
     }
 }
 
-void VendingMachine::addSlot(SnackSlot *slot)
+void VendingMachine::addSlot(SnackSlot* slot)
 {
-    if (full_slots > total_slots) 
-    {
+    if (full_slots > total_slots) {
         std::cerr << "error: в автомате со snake'ами закончилось место";
         exit(1);
     }
@@ -22,7 +21,7 @@ void VendingMachine::addSlot(SnackSlot *slot)
     slots.push_back(slot);
 }
 
-SnackSlot *VendingMachine::getSlot(unsigned int number_slot) const
+SnackSlot* VendingMachine::getSlot(unsigned int number_slot) const
 {
     if (number_slot > full_slots) {
         std::cerr << "слот с таким номером не существует.";
