@@ -1,6 +1,11 @@
+// #include <cstring> // for memset
 #include <iostream>
 
 #include "graph.h"
+
+namespace {
+const int big_int = 1'000'000'000;
+} // namespace
 
 GraphInt& GraphInt::add_vertex(int vnumber)
 {
@@ -64,7 +69,7 @@ bool GraphInt::does_vertex_exist(int v) const noexcept
     return false;
 }
 
-// graph traversial
+// graph traversal
 void GraphInt::dfs(int start) // depth first search
 {
     assert(start >= 0 || start <= vertex_count_);
@@ -93,7 +98,7 @@ void GraphInt::dfs_inner_iterative(int current, bool* visited) // stack
     assert(visited != NULL);
 }
 
-void GraphInt::bfs(int start) // breadth first search
+void GraphInt::bfs(int start) // breadth first search, queue
 {
     assert(start >= 0 && start <= vertex_count_);
 
@@ -122,6 +127,46 @@ void GraphInt::bfs(int start) // breadth first search
             if (!already_added && does_edge_exist(current, i) && !visited[i])
                 queue_to_visit[queue_count++] = i;
         }
+    }
+    std::cout << std::endl;
+}
+
+// shortest path searching algorithms
+void GraphInt::find_shortest_path(int v_from) // dijkstra's algorithm, for non-negative edge weight
+{
+    assert(v_from > 0);
+    int distances[SIZE]; // массив меток
+    bool passed[SIZE] = { 0 }; // признак, что вершина окрашена. все неокрашенные изначально
+    // std::memset(distances, big_int, sizeof(distances));
+    for (int i = 0; i < SIZE; ++i) {
+        distances[i] = big_int;
+    }
+
+    distances[v_from] = 0;
+
+    int current_vertex = v_from;
+    int min_dist = 0;
+    while (min_dist != big_int) {
+        // окрашиваем текущую вершину
+        passed[current_vertex] = true;
+        // пересчитываем метки
+        for (int i = 0; i < SIZE; ++i) {
+            int sum_current_weight = distances[current_vertex] + matrix_[current_vertex][i];
+            if (does_edge_exist(current_vertex, i) && sum_current_weight < distances[i])
+                distances[i] = sum_current_weight;
+        }
+        // находим минимальную метку среди неокрашенных
+        min_dist = big_int;
+        for (int i = 0; i < SIZE; ++i) {
+            if (does_vertex_exist(i) && !passed[i] && distances[i] < min_dist) {
+                min_dist = distances[i];
+                current_vertex = i;
+            }
+        }
+    }
+
+    for (int i = 0; i < vertex_count_; ++i) {
+        std::cout << "V" << i << ": " << distances[verteces_[i]] << ", ";
     }
     std::cout << std::endl;
 }
