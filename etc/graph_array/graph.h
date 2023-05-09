@@ -23,8 +23,8 @@ public:
     // shortest path searching algorithms
     void find_shortest_path(int v_from); // deijkstra's algorithms
     // graph traversal
-    void dfs(int start); // depth first search
-    void bfs(int start); // breadth first search
+    void bfs(int start); // breadth first search, queue
+    void dfs(int start, bool iterative_alg = false); // depth first search, O(V + E)
 private:
     void dfs_inner_recursive(int start, bool* visited);
     void dfs_inner_iterative(int start, bool* visited); // stack

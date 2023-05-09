@@ -9,7 +9,7 @@ const int big_int = 1'000'000'000;
 
 GraphInt& GraphInt::add_vertex(int vnumber)
 {
-    assert(vnumber >= 0); // developer check
+    assert(vnumber >= 0 && "add_vertex() get out of range"); // developer check
 
     verteces_[vertex_count_++] = vnumber;
     return *this;
@@ -70,18 +70,21 @@ bool GraphInt::does_vertex_exist(int v) const noexcept
 }
 
 // graph traversal
-void GraphInt::dfs(int start) // depth first search
+void GraphInt::dfs(int start, bool iterative_alg) // depth first search
 {
-    assert(start >= 0 || start <= vertex_count_);
+    assert(start >= 0 || start <= vertex_count_ || iterative_alg >= 0);
     bool visited[SIZE] = { 0 };
 
-    dfs_inner_recursive(start, visited);
+    if (iterative_alg != true)
+        dfs_inner_recursive(start, visited);
+    else
+        dfs_inner_iterative(start, visited);
     std::cout << std::endl;
 }
 
-void GraphInt::dfs_inner_recursive(int current, bool* visited)
+void GraphInt::dfs_inner_recursive(int current, bool* visited) // O(V + E)
 {
-    assert(visited != NULL);
+    assert(visited != NULL && "NULL pointer");
 
     std::cout << "V" << current << ", ";
     visited[current] = true;
@@ -95,13 +98,33 @@ void GraphInt::dfs_inner_recursive(int current, bool* visited)
 
 void GraphInt::dfs_inner_iterative(int current, bool* visited) // stack
 {
-    assert(visited != NULL);
+    assert(visited != NULL && "NULL pointer");
+    int stack_to_visit[SIZE]; // stack вершин для обхода
+    int stack_count = 0;
+
+    stack_to_visit[stack_count++] = current; // кладём начальную вершину
+    while (stack_count > 0) {
+        current = stack_to_visit[--stack_count]; // pop элемент из стека
+        // выводим текущую вершину
+        std::cout << "V" << current << ", ";
+        visited[current] = true;
+        for (int i = 0; i < SIZE; ++i) {
+            bool already_added = false;
+            for (int j = 0; j < stack_count; ++j) {
+                if (stack_to_visit[j] == i) {
+                    already_added = true;
+                    break;
+                }
+            }
+            if (!already_added && does_edge_exist(current, i) && !visited[i])
+                stack_to_visit[stack_count++] = i; // stack.push(i)
+        }
+    }
 }
 
 void GraphInt::bfs(int start) // breadth first search, queue
 {
-    assert(start >= 0 && start <= vertex_count_);
-
+    assert((start >= 0 && start <= vertex_count_) && "bfs() get out of range!");
     bool visited[SIZE] = { 0 };
     int queue_to_visit[SIZE]; // очередь вершин для обхода
     int queue_count = 0;
@@ -110,7 +133,7 @@ void GraphInt::bfs(int start) // breadth first search, queue
     while (queue_count > 0) { // цикл по очереди
         int current = queue_to_visit[0]; // берём из вершины
         queue_count--;
-        for (int i = 0; i < queue_count; i++) {
+        for (int i = 0; i < queue_count; ++i) { // сдвигаем
             queue_to_visit[i] = queue_to_visit[i + 1];
         }
         visited[current] = true;
@@ -125,7 +148,7 @@ void GraphInt::bfs(int start) // breadth first search, queue
                 }
             }
             if (!already_added && does_edge_exist(current, i) && !visited[i])
-                queue_to_visit[queue_count++] = i;
+                queue_to_visit[queue_count++] = i; // queue.push(i)
         }
     }
     std::cout << std::endl;
