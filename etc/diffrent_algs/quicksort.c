@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void swap(int* a, int* b)
 {
@@ -10,30 +11,29 @@ void swap(int* a, int* b)
     *b = temp;
 }
 
-void show(int* arr, int n)
+void show(const int* arr, int n)
 {
     for (int i = 0; i < n; ++i)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-// на каждом проходе ищем максимальный или минимальный элемент запоминаем позицию и обмениваем с
-// на первой..i позиции
-void select_sort(int* arr, int n) // O(n^2)
+int quick_sort_splitting(int* arr, int n)
 {
-    assert(arr != NULL && n > 0);
-
-    for (int i = 0; i < n - 1; ++i) {
-        int min = i;
-        for (int j = i + 1; j < n; ++j) {
-            if (arr[j] < arr[min]) {
-                min = j;
-            }
-        }
-        if (min != i) {
-            swap(arr + i, arr + min);
-        }
+    int left = -1, right = n;
+    double v = 0.5 * (arr[0] + arr[n - 1]);
+    while (true) {
     }
+}
+
+void quick_sort(int* arr, int n)
+{
+    assert(arr != NULL);
+    if (n < 2)
+        return;
+    int k = quick_sort_splitting(arr, n);
+    quick_sort(arr, k);
+    quick_sort(arr + k, n - k);
 }
 
 static void test()
@@ -41,11 +41,12 @@ static void test()
     int i;
     const int length = 20;
     int* arr = malloc(length * sizeof(int));
+
     for (i = 0; i < length; ++i) {
         arr[i] = rand() % 100;
     }
     show(arr, length);
-    select_sort(arr, length);
+    quick_sort(arr, length);
     for (i = 0; i < length - 1; ++i) {
         assert(arr[i] <= arr[i + 1]);
     }
@@ -55,6 +56,7 @@ static void test()
 
 int main(void)
 {
+    srand(time(NULL));
     test();
     return 0;
 }

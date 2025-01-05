@@ -26,9 +26,14 @@ void xor_swap(int& a, int& b)
 
     // x ^ x = 0, a ^ 0 = a, a ^ 1 = ~a
     a ^= b; // a = a ^ b
-    b ^= a; // b = (a ^ b) ^ a => b = a
+    b ^= a; // b = b ^ (a ^ b) => b = a
     a ^= b; // a = (a ^ b) ^ b => a = b
             // a ^ b ^ b, a ^ b ^ a ^ b ^ a
+    /* (a, b)
+    a = a ^ b #  (a ^ b, b)
+    b = a_(a ^ b) ^ b, #  (a ^ b, a)
+    a = a_(a ^ b) ^ b_(a) # (a, b)
+    */
 }
 
 int main()
